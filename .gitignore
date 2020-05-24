@@ -1,0 +1,7 @@
+*.sln
+.vs/
+DB_Layer/bin/
+DB_Layer/obj/
+DB_Layer/Properties/
+packages/
+*.csproj
