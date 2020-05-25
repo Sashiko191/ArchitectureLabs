@@ -3,5 +3,8 @@
 DB_Layer/bin/
 DB_Layer/obj/
 DB_Layer/Properties/
+BusinessLogic/bin/
+BusinessLogic/obj/
+BusinessLogic/Properties/
 packages/
 *.csproj
