@@ -86,6 +86,42 @@ namespace BusinessLogic
             }
             Console.WriteLine("\nEnter Rooms ID, Start Hour and Hours to spend.\nFormat[RoomId1,RoomId2.StartHour;AmountOfHoursToSpend].\nExample: 7,9.15;3 - Order rooms with id 7 and 9. Beginning at 15:00. Lasting 3 hours.\nDon't forget we work between 08:00 - 00:00 every day)\n");
 
+            string[] IdsStartTimeHours = Console.ReadLine().Split(';');
+            int Hours = Convert.ToInt32(IdsStartTimeHours[1]);
+            string[] IdsStartTime = IdsStartTimeHours[0].Split('.');
+            int StartHour = Convert.ToInt32(IdsStartTime[1]);
+            string[] RoomIdStrings = IdsStartTime[0].Split(',');
+
+            Console.WriteLine("Enter your name: ");
+            string clientName = Console.ReadLine();
+            Console.WriteLine("Enter your surname: ");
+            string clientSurname = Console.ReadLine();
+
+            DateTime FinaDateTime = DesiredDateTime;
+            FinaDateTime = FinaDateTime.AddHours(StartHour);
+
+            List<Room> UserOrderedRoom = new List<Room>();
+            for (int i = 0; i < RoomIdStrings.Length; i++)
+            {
+                int curId = Convert.ToInt32(RoomIdStrings[i]);
+                Room room = unitOfWork.roomsRepository.GetT(curId);
+                if (room != null)
+                    UserOrderedRoom.Add(room);
+            }
+
+            if (!orderScheduler.HasIntersection(FinaDateTime, Hours, UserOrderedRoom))
+            {
+                Order newOrder = new Order() { Name = clientName, Surname = clientSurname, Hours = Hours, StartDate = FinaDateTime, OrderedRooms = UserOrderedRoom };
+                unitOfWork.ordersRepository.Create(newOrder);
+                if (interestedActivity.PricePerHour != 0)
+                    Console.WriteLine("Your order was successfully added. You have to pay " + interestedActivity.PricePerHour * Hours * UserOrderedRoom.Count + ". Waiting for you at agreed date");
+                else
+                    Console.WriteLine("Your order was succesfully added. Our manager will call you to talk about the price.");
+            }
+            else
+                Console.WriteLine("Can't set this time");
+
+            unitOfWork.Dispose();
             Console.ReadLine();
         }
 
