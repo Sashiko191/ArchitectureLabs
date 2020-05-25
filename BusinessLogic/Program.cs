@@ -13,6 +13,7 @@ namespace BusinessLogic
         static void Main(string[] args)
         {
             UnitOfWork unitOfWork = new UnitOfWork();
+            OrderScheduler orderScheduler = new OrderScheduler(unitOfWork);
 
             Console.WriteLine("WELCOME TO THE ANTICAFE");
             Console.WriteLine("Our Activities. Choose from list: ");
@@ -66,6 +67,25 @@ namespace BusinessLogic
                 interestedActivity = activities[activity_number];
             }
             Console.Clear();
+
+            Console.WriteLine("Enter desired date. Format [Date.Month.Year]. Example: 12.03.2019 ");
+            string DesiredDateString = Console.ReadLine();
+            string[] splitedDate = DesiredDateString.Split('.');
+            DateTime DesiredDateTime = new DateTime(Convert.ToInt32(splitedDate[2]), Convert.ToInt32(splitedDate[1]), Convert.ToInt32(splitedDate[0]));
+            Console.Clear();
+
+            var PsblRooms = interestedActivity.PosibleRooms.ToList();
+            for (int i = 0; i < PsblRooms.Count; i++)
+            {
+                Console.WriteLine("Room ID: " + PsblRooms[i].Id + " Room Name: " + PsblRooms[i].Name);
+                var posibleOrders = orderScheduler.GetActiveOrders(DesiredDateTime, PsblRooms[i]);
+                for (int j = 0; j < posibleOrders.Count; j++)
+                {
+                    Console.WriteLine("  OrderID: " + posibleOrders[j].Id + "  StartTime: " + posibleOrders[j].StartDate.ToString("HH:mm") + " EndTime: " + posibleOrders[j].StartDate.AddHours(posibleOrders[j].Hours).ToString("HH:mm"));
+                }
+            }
+            Console.WriteLine("\nEnter Rooms ID, Start Hour and Hours to spend.\nFormat[RoomId1,RoomId2.StartHour;AmountOfHoursToSpend].\nExample: 7,9.15;3 - Order rooms with id 7 and 9. Beginning at 15:00. Lasting 3 hours.\nDon't forget we work between 08:00 - 00:00 every day)\n");
+
             Console.ReadLine();
         }
 
