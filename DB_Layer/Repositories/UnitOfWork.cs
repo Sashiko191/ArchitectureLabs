@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Models
+namespace DB_Layer.Repositories
 {
     public class UnitOfWork : IDisposable
     {
@@ -27,9 +27,9 @@ namespace BusinessLogic.Models
         private bool disposed = false;
         public virtual void Dispose(bool disposing)
         {
-            if(!this.disposed)
+            if (!this.disposed)
             {
-                if(disposing)
+                if (disposing)
                 {
                     db.Dispose();
                 }

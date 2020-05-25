@@ -1,11 +1,12 @@
-﻿using DB_Layer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DB_Layer.Models;
+using DB_Layer.Interfaces;
 
-namespace BusinessLogic.Models
+namespace DB_Layer.Repositories
 {
     public class ActivitiesRepository : IRepository<Activity>
     {
@@ -48,7 +49,7 @@ namespace BusinessLogic.Models
         {
             int itemId = item.Id;
             var oldActivity = db.Activitites.Where(a => a.Id == itemId).FirstOrDefault();
-            if(oldActivity != null)
+            if (oldActivity != null)
             {
                 oldActivity.IsSpecialActivity = item.IsSpecialActivity;
                 oldActivity.Name = item.Name;

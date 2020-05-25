@@ -1,11 +1,12 @@
-﻿using DB_Layer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DB_Layer.Models;
+using DB_Layer.Interfaces;
 
-namespace BusinessLogic.Models
+namespace DB_Layer.Repositories
 {
     public class EquipmentRepository : IRepository<Equipment>
     {
@@ -17,7 +18,7 @@ namespace BusinessLogic.Models
         }
         public void Create(Equipment item)
         {
-            if(item != null)
+            if (item != null)
             {
                 db.CafeEquipment.Add(item);
                 db.SaveChanges();
@@ -47,7 +48,7 @@ namespace BusinessLogic.Models
         public void Update(Equipment item)
         {
             var oldEquipment = db.CafeEquipment.Where(e => e.Id == item.Id).FirstOrDefault();
-            if(oldEquipment != null)
+            if (oldEquipment != null)
             {
                 oldEquipment.Name = item.Name;
                 oldEquipment.Description = item.Description;

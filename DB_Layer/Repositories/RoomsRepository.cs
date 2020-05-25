@@ -1,11 +1,12 @@
-﻿using DB_Layer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DB_Layer.Interfaces;
+using DB_Layer.Models;
 
-namespace BusinessLogic.Models
+namespace DB_Layer.Repositories
 {
     public class RoomsRepository : IRepository<Room>
     {
@@ -16,7 +17,7 @@ namespace BusinessLogic.Models
         }
         public void Create(Room item)
         {
-            if(item != null)
+            if (item != null)
             {
                 db.Rooms.Add(item);
                 db.SaveChanges();
@@ -26,7 +27,7 @@ namespace BusinessLogic.Models
         public void Delete(int id)
         {
             var room = db.Rooms.Where(r => r.Id == id).FirstOrDefault();
-            if(room != null)
+            if (room != null)
             {
                 db.Rooms.Remove(room);
                 db.SaveChanges();
@@ -46,7 +47,7 @@ namespace BusinessLogic.Models
         public void Update(Room item)
         {
             var oldItem = db.Rooms.Where(r => r.Id == item.Id).FirstOrDefault();
-            if(oldItem != null)
+            if (oldItem != null)
             {
                 oldItem.Name = item.Name;
                 oldItem.PosibleActivities = item.PosibleActivities;

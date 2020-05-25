@@ -1,11 +1,12 @@
-﻿using DB_Layer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DB_Layer.Interfaces;
+using DB_Layer.Models;
 
-namespace BusinessLogic.Models
+namespace DB_Layer.Repositories
 {
     public class OrdersRepository : IRepository<Order>
     {
@@ -27,7 +28,7 @@ namespace BusinessLogic.Models
         public void Delete(int id)
         {
             var order = db.Orders.Where(o => o.Id == id).FirstOrDefault();
-            if(order != null)
+            if (order != null)
             {
                 db.Orders.Remove(order);
                 db.SaveChanges();
@@ -47,7 +48,7 @@ namespace BusinessLogic.Models
         public void Update(Order item)
         {
             var oldOrder = db.Orders.Where(o => o.Id == item.Id).FirstOrDefault();
-            if(oldOrder != null)
+            if (oldOrder != null)
             {
                 oldOrder.Name = item.Name;
                 oldOrder.StartDate = item.StartDate;
