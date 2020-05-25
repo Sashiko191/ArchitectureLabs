@@ -31,6 +31,51 @@ namespace BusinessLogic.Models
             }
 
             return AllOrders;
-        }  
+        }
+        public bool HasIntersection(DateTime DesiredDate, int Hours, List<Room> rooms)
+        {
+            DateTime StartDateTime = DesiredDate;
+            DateTime EndDateTime = DesiredDate.AddHours(Hours);
+
+            if (StartDateTime.Hour > 8 && EndDateTime.Hour > StartDateTime.Hour && EndDateTime.Hour < 24)
+            {
+
+                for (int i = 0; i < rooms.Count; i++)
+                {
+                    List<Order> AllOrdersForRoom = GetActiveOrders(DesiredDate, rooms[i]);
+                    for (int j = 0; j < AllOrdersForRoom.Count; j++)
+                    {
+                        DateTime OrderStartDateTime = AllOrdersForRoom[j].StartDate;
+                        DateTime OrderEndDateTime = AllOrdersForRoom[j].StartDate.AddHours(AllOrdersForRoom[j].Hours);
+
+                        if (StartDateTime < OrderStartDateTime)
+                        {
+                            if (EndDateTime <= OrderStartDateTime)
+                            {
+
+                            }
+                            else
+                                return true;
+                        }
+                        else if (StartDateTime >= OrderEndDateTime)
+                        {
+                            if (EndDateTime > OrderEndDateTime)
+                            {
+
+                            }
+                            else
+                                return true;
+                        }
+                        else
+                            return true;
+
+                    }
+                }
+            }
+            else
+                return true;
+
+            return false;
+        }
     }
 }
