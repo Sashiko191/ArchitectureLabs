@@ -8,3 +8,4 @@ BusinessLogic/obj/
 BusinessLogic/Properties/
 packages/
 *.csproj
+*.csproj.user
