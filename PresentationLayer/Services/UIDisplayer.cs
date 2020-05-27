@@ -6,19 +6,22 @@ using System.Threading.Tasks;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Models;
 using BusinessLogic.Services;
+using Ninject;
 
 namespace PresentationLayer.Services
 {
     public class UIDisplayer
     {
+        private IKernel DIResolver;
         private IActivityService activityService;
         private IOrderService orderService;
         private IRoomService roomService;
         public UIDisplayer()
         {
-            activityService = new ActivityService();
-            orderService = new OrderService();
-            roomService = new RoomService();
+            DIResolver = DI_Resolver.GetDIResolver();
+            activityService = DIResolver.Get<IActivityService>();
+            orderService = DIResolver.Get<IOrderService>();
+            roomService = DIResolver.Get<IRoomService>();
         }
         public List<ActivityDTO> ShowActivities()
         {

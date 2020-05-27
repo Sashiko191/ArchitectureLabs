@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DB_Layer.Repositories;
 using BusinessLogic.UnitOfWorkRealization;
+using BusinessLogic.Services;
+using Ninject;
+using BusinessLogic.Interfaces;
 
 namespace BusinessLogic.Models
 {
     public class ActivityDTO
-    {
+    {       
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -25,7 +28,7 @@ namespace BusinessLogic.Models
                            .ForMember("GetPosibleActivities", opt => opt.Ignore())
                            .ForMember("GetRoomEquipment", opt => opt.Ignore()));
             var mapper = new Mapper(config);
-            return mapper.Map<List<RoomDTO>>(UnitOfWork.GetUnitOfWork().activitiesRepository.FindById(Id).PosibleRooms.ToList());
+            return mapper.Map<List<RoomDTO>>(DI_Resolver.GetDIResolver().Get<IUnitOfWork<AntiCafeDb>>().activitiesRepository.FindById(Id).PosibleRooms.ToList());
 
         }
     }

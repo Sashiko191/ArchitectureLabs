@@ -1,4 +1,5 @@
-﻿using DB_Layer.Interfaces;
+﻿using BusinessLogic.Interfaces;
+using DB_Layer.Interfaces;
 using DB_Layer.Models;
 using DB_Layer.Repositories;
 using System;
@@ -9,17 +10,15 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.UnitOfWorkRealization
 {
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork<AntiCafeDb>,IDisposable
     {
-        private static UnitOfWork instance;
-        public AntiCafeDb db;
+        public AntiCafeDb db { get; set; }
+        public IGenericRepository<Order> ordersRepository { get; set; }
+        public IGenericRepository<Room> roomsRepository { get; set; }
+        public IGenericRepository<Equipment> equipmentRepository { get; set; }
+        public IGenericRepository<Activity> activitiesRepository { get; set; }
 
-        public IGenericRepository<Order> ordersRepository;
-        public IGenericRepository<Room> roomsRepository;
-        public IGenericRepository<Equipment> equipmentRepository;
-        public IGenericRepository<Activity> activitiesRepository;
-
-        private UnitOfWork()
+        public UnitOfWork()
         {
             db = new AntiCafeDb();
             ordersRepository = new GenericRepository<Order>(db);
@@ -27,16 +26,9 @@ namespace BusinessLogic.UnitOfWorkRealization
             equipmentRepository = new GenericRepository<Equipment>(db);
             activitiesRepository = new GenericRepository<Activity>(db);
         }
-
         public void SaveDB()
         {
             db.SaveChanges();
-        }
-        public static UnitOfWork GetUnitOfWork()
-        {
-            if (instance == null)
-                instance = new UnitOfWork();
-            return instance;
         }
 
         private bool disposed = false;

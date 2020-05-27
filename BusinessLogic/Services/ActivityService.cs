@@ -4,6 +4,7 @@ using BusinessLogic.Models;
 using BusinessLogic.UnitOfWorkRealization;
 using DB_Layer.Models;
 using DB_Layer.Repositories;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +14,16 @@ using System.Threading.Tasks;
 namespace BusinessLogic.Services
 {
     public class ActivityService : IActivityService
-    {
-        private UnitOfWork unitOfWork;
-        private MappingConfigsGenerator mapConfigsGenerator;
+    {       
+        private IKernel DIResolver;
+        private IUnitOfWork<AntiCafeDb> unitOfWork;
+        private IMappingConfigsGenerator mapConfigsGenerator;
 
         public ActivityService()
         {
-            unitOfWork = UnitOfWork.GetUnitOfWork();
-            mapConfigsGenerator = new MappingConfigsGenerator();
+            DIResolver = DI_Resolver.GetDIResolver();
+            mapConfigsGenerator = DIResolver.Get<IMappingConfigsGenerator>();
+            unitOfWork = DIResolver.Get<IUnitOfWork<AntiCafeDb>>();          
         }
         public List<ActivityDTO> GetAllActivities()
         {        

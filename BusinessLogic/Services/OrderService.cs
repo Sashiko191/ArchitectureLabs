@@ -10,18 +10,21 @@ using DB_Layer.Repositories;
 using DB_Layer.Models;
 using System.Data.Entity;
 using BusinessLogic.UnitOfWorkRealization;
+using Ninject;
 
 namespace BusinessLogic.Services
 {
     public class OrderService : IOrderService
     {
-        private UnitOfWork unitOfWork;
-        private MappingConfigsGenerator mapConfigsGenerator;
+        private IUnitOfWork<AntiCafeDb> unitOfWork;
+        private IMappingConfigsGenerator mapConfigsGenerator;
+        private IKernel DIResolver;
 
         public OrderService()
         {
-            unitOfWork = UnitOfWork.GetUnitOfWork();
-            mapConfigsGenerator = new MappingConfigsGenerator();
+            DIResolver = DI_Resolver.GetDIResolver();
+            unitOfWork = DIResolver.Get<IUnitOfWork<AntiCafeDb>>(); //UnitOfWork.GetUnitOfWork();
+            mapConfigsGenerator = DIResolver.Get<IMappingConfigsGenerator>(); //new MappingConfigsGenerator();
         }
         public List<OrderDTO> GetActiveOrders(DateTime desiredDate, RoomDTO room)
         {

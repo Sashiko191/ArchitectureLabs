@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogic.Models;
 using DB_Layer.Models;
+using BusinessLogic.Interfaces;
 
 namespace BusinessLogic.Services
 {
-    public class MappingConfigsGenerator
+    public class MappingConfigsGenerator : IMappingConfigsGenerator
     {
         public Mapper RoomToDTOMapper()
         {
