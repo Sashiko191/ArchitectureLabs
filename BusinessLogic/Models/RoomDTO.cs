@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
-using BusinessLogic.UnitOfWorkRealization;
+using DB_Layer.Interfaces;
 using DB_Layer.Models;
 using DB_Layer.Repositories;
 using Ninject;

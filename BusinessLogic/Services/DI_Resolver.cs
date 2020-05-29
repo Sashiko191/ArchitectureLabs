@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Interfaces;
-using BusinessLogic.UnitOfWorkRealization;
+using DB_Layer.Interfaces;
 using DB_Layer.Models;
+using DB_Layer.Repositories;
 using Ninject;
 
 namespace BusinessLogic.Services
@@ -23,6 +24,8 @@ namespace BusinessLogic.Services
             NinjectResolver.Bind<IMappingConfigsGenerator>().To<MappingConfigsGenerator>();
             NinjectResolver.Bind<IUnitOfWork<AntiCafeDb>>().To<UnitOfWork>();
         }
+
+        public static object Get { get; set; }
 
         public static IKernel GetDIResolver()
         {

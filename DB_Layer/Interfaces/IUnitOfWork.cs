@@ -1,12 +1,11 @@
-﻿using DB_Layer.Interfaces;
-using DB_Layer.Models;
+﻿using DB_Layer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Interfaces
+namespace DB_Layer.Interfaces
 {
     public interface IUnitOfWork<T>
     {

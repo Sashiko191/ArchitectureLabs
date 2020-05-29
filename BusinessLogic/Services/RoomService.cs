@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Models;
-using BusinessLogic.UnitOfWorkRealization;
+using DB_Layer.Interfaces;
 using DB_Layer.Models;
 using DB_Layer.Repositories;
 using Ninject;
@@ -22,8 +22,14 @@ namespace BusinessLogic.Services
         public RoomService()
         {
             DIResolver = DI_Resolver.GetDIResolver();
-            unitOfWork = DIResolver.Get<IUnitOfWork<AntiCafeDb>>(); //UnitOfWork.GetUnitOfWork();
-            mapConfigsGenerator = DIResolver.Get<IMappingConfigsGenerator>(); //new MappingConfigsGenerator();
+            unitOfWork = DIResolver.Get<IUnitOfWork<AntiCafeDb>>();
+            mapConfigsGenerator = DIResolver.Get<IMappingConfigsGenerator>();
+        }
+
+        public RoomService(IUnitOfWork<AntiCafeDb> _unitOfWork, IMappingConfigsGenerator _mappingConfigsGenerator)
+        {
+            unitOfWork = _unitOfWork;
+            mapConfigsGenerator = _mappingConfigsGenerator;
         }
         public List<RoomDTO> GetAllRooms()
         {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Models;
-using BusinessLogic.UnitOfWorkRealization;
+using DB_Layer.Interfaces;
 using DB_Layer.Models;
 using DB_Layer.Repositories;
 using Ninject;
@@ -24,6 +24,12 @@ namespace BusinessLogic.Services
             DIResolver = DI_Resolver.GetDIResolver();
             mapConfigsGenerator = DIResolver.Get<IMappingConfigsGenerator>();
             unitOfWork = DIResolver.Get<IUnitOfWork<AntiCafeDb>>();          
+        }
+
+        public ActivityService(IUnitOfWork<AntiCafeDb> _unitOfWork, IMappingConfigsGenerator _mappingConfigsGenerator)
+        {
+            unitOfWork = _unitOfWork;
+            mapConfigsGenerator = _mappingConfigsGenerator;
         }
         public List<ActivityDTO> GetAllActivities()
         {        

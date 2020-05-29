@@ -9,8 +9,8 @@ using AutoMapper;
 using DB_Layer.Repositories;
 using DB_Layer.Models;
 using System.Data.Entity;
-using BusinessLogic.UnitOfWorkRealization;
 using Ninject;
+using DB_Layer.Interfaces;
 
 namespace BusinessLogic.Services
 {
@@ -19,17 +19,22 @@ namespace BusinessLogic.Services
         private IUnitOfWork<AntiCafeDb> unitOfWork;
         private IMappingConfigsGenerator mapConfigsGenerator;
         private IKernel DIResolver;
-
         public OrderService()
         {
             DIResolver = DI_Resolver.GetDIResolver();
-            unitOfWork = DIResolver.Get<IUnitOfWork<AntiCafeDb>>(); //UnitOfWork.GetUnitOfWork();
-            mapConfigsGenerator = DIResolver.Get<IMappingConfigsGenerator>(); //new MappingConfigsGenerator();
+            unitOfWork = DIResolver.Get<IUnitOfWork<AntiCafeDb>>();
+            mapConfigsGenerator = DIResolver.Get<IMappingConfigsGenerator>();
+        }
+        public OrderService(IUnitOfWork<AntiCafeDb> _unitOfWork, IMappingConfigsGenerator _mappingConfigsGenerator)
+        {
+            unitOfWork = _unitOfWork;
+            mapConfigsGenerator = _mappingConfigsGenerator;
         }
         public List<OrderDTO> GetActiveOrders(DateTime desiredDate, RoomDTO room)
         {
             var mapper = mapConfigsGenerator.OrderToDTOMapper();
-            List<OrderDTO> AllOrders = mapper.Map<List<OrderDTO>>(unitOfWork.db.Orders.Where(o => DbFunctions.TruncateTime(o.StartDate) == desiredDate.Date).ToList());
+            List<OrderDTO> AllOrders = mapper.Map<List<OrderDTO>>(unitOfWork.ordersRepository.Get(o => o.StartDate.Date == desiredDate.Date).ToList());
+            //List<OrderDTO> AllOrders = mapper.Map<List<OrderDTO>>(unitOfWork.db.Orders.Where(o => DbFunctions.TruncateTime(o.StartDate) == desiredDate.Date).ToList());
 
             for (int i = 0; i < AllOrders.Count; i++)
             {

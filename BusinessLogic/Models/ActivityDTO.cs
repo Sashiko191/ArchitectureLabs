@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DB_Layer.Repositories;
-using BusinessLogic.UnitOfWorkRealization;
 using BusinessLogic.Services;
 using Ninject;
 using BusinessLogic.Interfaces;
+using DB_Layer.Interfaces;
 
 namespace BusinessLogic.Models
 {

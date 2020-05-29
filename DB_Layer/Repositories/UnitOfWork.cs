@@ -1,16 +1,14 @@
-﻿using BusinessLogic.Interfaces;
-using DB_Layer.Interfaces;
+﻿using DB_Layer.Interfaces;
 using DB_Layer.Models;
-using DB_Layer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.UnitOfWorkRealization
+namespace DB_Layer.Repositories
 {
-    public class UnitOfWork : IUnitOfWork<AntiCafeDb>,IDisposable
+    public class UnitOfWork : IUnitOfWork<AntiCafeDb>, IDisposable
     {
         public AntiCafeDb db { get; set; }
         public IGenericRepository<Order> ordersRepository { get; set; }

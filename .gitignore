@@ -6,6 +6,16 @@ DB_Layer/Properties/
 BusinessLogic/bin/
 BusinessLogic/obj/
 BusinessLogic/Properties/
+PresentationLayer/bin/
+PresentationLayer/obj/
+PresentationLayer/Properties/
+UnitTests/bin/
+UnitTests/obj/
+UnitTests/Properties/
 packages/
 *.csproj
 *.csproj.user
+*.pdb
+*.png
+*.dll
+*.cache
