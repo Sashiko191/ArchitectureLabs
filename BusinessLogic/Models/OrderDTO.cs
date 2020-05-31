@@ -25,6 +25,8 @@ namespace BusinessLogic.Models
 
         public int Hours { get; set; }
 
+        public List<RoomDTO> IncludedRooms { get;set; }
+
         public List<RoomDTO> GetOrderedRooms()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Room, RoomDTO>()

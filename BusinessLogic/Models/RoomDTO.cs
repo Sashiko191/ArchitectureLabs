@@ -17,6 +17,11 @@ namespace BusinessLogic.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public List<OrderDTO> IncludedOrders { get; set; }
+        public List<ActivityDTO> IncludedActivities { get; set; }
+        public List<EquipmentDTO> IncludedEquipment { get; set; }
+            
         public List<OrderDTO> GetRoomOrders()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Order, OrderDTO>()

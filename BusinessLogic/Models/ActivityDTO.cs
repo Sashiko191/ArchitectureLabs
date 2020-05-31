@@ -20,7 +20,7 @@ namespace BusinessLogic.Models
         public string Description { get; set; }
         public double PricePerHour { get; set; }
         public bool IsSpecialActivity { get; set; }
-
+        public List<RoomDTO> IncludedRooms { get; set; }
         public List<RoomDTO> GetPosibleRooms()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Room, RoomDTO>()

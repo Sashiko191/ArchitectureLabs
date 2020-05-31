@@ -15,17 +15,7 @@ namespace PresentationLayer
     {
         static void Main(string[] args)
         {
-            IKernel ninjectKernel = new StandardKernel();
-            ninjectKernel.Bind<IActivityService>().To<ActivityService>();
-            ninjectKernel.Bind<IOrderService>().To<OrderService>();
-            ninjectKernel.Bind<IRoomService>().To<RoomService>();
-
-            UIDisplayer uIDisplayer = new UIDisplayer();
-            var lst = uIDisplayer.ShowActivities();
-            ActivityDTO activityDTO = uIDisplayer.ChooseActivity(lst);
-            DateTime DesiredDateTime = uIDisplayer.ChooseDate();
-            uIDisplayer.MakeOrder(activityDTO, DesiredDateTime);
-            Console.ReadLine();
+          
         }
     }
 }

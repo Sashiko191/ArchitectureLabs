@@ -12,6 +12,9 @@ PresentationLayer/Properties/
 UnitTests/bin/
 UnitTests/obj/
 UnitTests/Properties/
+WebApi/bin/
+WebApi/obj/
+WebApi/Properties/
 packages/
 *.csproj
 *.csproj.user

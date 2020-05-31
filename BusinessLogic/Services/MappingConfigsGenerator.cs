@@ -16,8 +16,11 @@ namespace BusinessLogic.Services
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Room, RoomDTO>()
            .ForMember("GetRoomOrders", opt => opt.Ignore())
+           .ForMember("IncludedOrders",opt => opt.Ignore())
            .ForMember("GetPosibleActivities", opt => opt.Ignore())
-           .ForMember("GetRoomEquipment", opt => opt.Ignore()));
+           .ForMember("IncludedActivities",opt => opt.Ignore())
+           .ForMember("GetRoomEquipment", opt => opt.Ignore())
+           .ForMember("IncludedEquipment",opt => opt.Ignore()));
             return new Mapper(config);
         }
 
@@ -33,7 +36,8 @@ namespace BusinessLogic.Services
         public Mapper OrderToDTOMapper()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Order, OrderDTO>()
-                       .ForMember("GetOrderedRooms", opt => opt.Ignore()));
+                       .ForMember("GetOrderedRooms", opt => opt.Ignore())
+                       .ForMember("IncludedRooms",opt => opt.Ignore()));
             return new Mapper(config);
         }
 
@@ -46,7 +50,9 @@ namespace BusinessLogic.Services
 
         public Mapper ActivityToDTOMapper()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Activity, ActivityDTO>().ForMember("GetPosibleRooms", opt => opt.Ignore()));
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Activity, ActivityDTO>()
+            .ForMember("GetPosibleRooms", opt => opt.Ignore())
+            .ForMember("IncludedRooms",opt => opt.Ignore()));
             return new Mapper(config);
         }
 
@@ -54,6 +60,21 @@ namespace BusinessLogic.Services
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ActivityDTO, Activity>()
                        .ForMember("PosibleRooms", opt => opt.Ignore()));
+            return new Mapper(config);
+        }
+
+        public Mapper EquipmentToDTOMapper()
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Equipment,EquipmentDTO>()
+                       .ForMember("GetRoomsThatHaveIt", opt => opt.Ignore())
+                       .ForMember("IncludedRooms",opt => opt.Ignore()));
+            return new Mapper(config);
+        }
+
+        public Mapper DTOToEquipmentMapper()
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<EquipmentDTO, Equipment>()
+                                  .ForMember("RoomsThatHaveIt", opt => opt.Ignore()));
             return new Mapper(config);
         }
     }

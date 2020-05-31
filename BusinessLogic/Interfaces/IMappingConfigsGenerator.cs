@@ -15,5 +15,7 @@ namespace BusinessLogic.Interfaces
         Mapper DTOToOrderMapper();
         Mapper ActivityToDTOMapper();
         Mapper DTOToActivityMapper();
+        Mapper EquipmentToDTOMapper();
+        Mapper DTOToEquipmentMapper();
     }
 }
